@@ -50,6 +50,7 @@ where
     D: IntoVal<Env, Val>,
 {
     let all = env.events().all();
+    assert!(all.len() > 0, "No events were published");
     let actual = vec![env, all.get(all.len() - 1).unwrap()];
     let expected = vec![
         env,
