@@ -71,14 +71,14 @@ pub enum Error {
     Overflow = 8,
 }
 
-#[contractevent(topics = ["created"])]
+#[contractevent(topics = ["created"], data_format = "single-value")]
 pub struct CreatedEvent {
     #[topic]
     pub id: u64,
     pub count: u32,
 }
 
-#[contractevent(topics = ["funded"])]
+#[contractevent(topics = ["funded"], data_format = "single-value")]
 pub struct FundedEvent {
     #[topic]
     pub id: u64,
@@ -87,7 +87,7 @@ pub struct FundedEvent {
     pub amount: i128,
 }
 
-#[contractevent(topics = ["submitted"])]
+#[contractevent(topics = ["submitted"], data_format = "single-value")]
 pub struct SubmittedEvent {
     #[topic]
     pub id: u64,
@@ -96,7 +96,7 @@ pub struct SubmittedEvent {
     pub evidence_uri: String,
 }
 
-#[contractevent(topics = ["disputed"])]
+#[contractevent(topics = ["disputed"], data_format = "single-value")]
 pub struct DisputedEvent {
     #[topic]
     pub id: u64,
@@ -105,7 +105,7 @@ pub struct DisputedEvent {
     pub actor: Address,
 }
 
-#[contractevent(topics = ["settled"])]
+#[contractevent(topics = ["settled"], data_format = "vec")]
 pub struct SettledEvent {
     #[topic]
     pub id: u64,

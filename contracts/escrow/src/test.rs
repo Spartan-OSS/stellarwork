@@ -1,7 +1,8 @@
 use super::*;
 use soroban_sdk::{
-    testutils::{Address as _, Ledger},
-    vec,
+    symbol_short,
+    testutils::{Address as _, Events as _, Ledger},
+    vec, IntoVal, Val, Vec,
 };
 
 fn fixture() -> (Env, Address, Address, Address, Address, Address) {
@@ -43,15 +44,47 @@ fn create(env: &Env, id: &Address, c: &Address, w: &Address, j: &Address) -> u64
     )
 }
 
+fn assert_last_event<T, D>(env: &Env, contract: &Address, topics: T, data: D)
+where
+    T: IntoVal<Env, Vec<Val>>,
+    D: IntoVal<Env, Val>,
+{
+    let all = env.events().all();
+    let actual = vec![env, all.get(all.len() - 1).unwrap()];
+    let expected = vec![
+        env,
+        (
+            contract.clone(),
+            topics.into_val(env),
+            data.into_val(env),
+        )
+    ];
+    assert_eq!(actual, expected);
+}
+
 #[test]
 fn approval_conserves_tokens_and_preserves_other_milestone() {
     let (env, id, asset, c, w, j) = fixture();
     let api = EscrowClient::new(&env, &id);
     let eid = create(&env, &id, &c, &w, &j);
+    assert_last_event(&env, &id, (symbol_short!("created"), eid), 2_u32);
     api.fund_milestone(&eid, &0);
+    assert_last_event(&env, &id, (symbol_short!("funded"), eid, 0_u32), 100_i128);
     api.fund_milestone(&eid, &1);
     api.submit_work(&eid, &0, &String::from_str(&env, "ipfs://proof"));
+    assert_last_event(
+        &env,
+        &id,
+        (symbol_short!("submitted"), eid, 0_u32),
+        String::from_str(&env, "ipfs://proof"),
+    );
     api.approve_milestone(&eid, &0);
+    assert_last_event(
+        &env,
+        &id,
+        (symbol_short!("settled"), eid, 0_u32),
+        (0_i128, 100_i128, Status::Completed),
+    );
     let t = token::Client::new(&env, &asset);
     assert_eq!(t.balance(&c), 700);
     assert_eq!(t.balance(&w), 100);
@@ -70,10 +103,17 @@ fn split_resolution_and_invalid_split() {
     api.fund_milestone(&eid, &0);
     api.submit_work(&eid, &0, &String::from_str(&env, "ipfs://proof"));
     api.raise_dispute(&eid, &0, &w);
+    assert_last_event(&env, &id, (symbol_short!("disputed"), eid, 0_u32), w.clone());
     assert!(api.try_resolve_dispute(&eid, &0, &70, &40).is_err());
     assert_eq!(api.get_locked(), 100);
     assert_eq!(api.get_milestone(&eid, &0).status, Status::Disputed);
     api.resolve_dispute(&eid, &0, &70, &30);
+    assert_last_event(
+        &env,
+        &id,
+        (symbol_short!("settled"), eid, 0_u32),
+        (70_i128, 30_i128, Status::Resolved),
+    );
     let t = token::Client::new(&env, &asset);
     assert_eq!(t.balance(&c), 970);
     assert_eq!(t.balance(&w), 30);
