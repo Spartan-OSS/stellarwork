@@ -269,11 +269,7 @@ impl Escrow {
         }
         env.storage().instance().set(&Key::NextId, &next);
         touch(&env);
-        CreatedEvent {
-            id,
-            count: g.count,
-        }
-        .publish(&env);
+        CreatedEvent { id, count: g.count }.publish(&env);
         Ok(id)
     }
 
@@ -351,12 +347,7 @@ impl Escrow {
         }
         m.status = Status::Disputed;
         save_milestone(&env, id, mid, &m);
-        DisputedEvent {
-            id,
-            mid,
-            actor,
-        }
-        .publish(&env);
+        DisputedEvent { id, mid, actor }.publish(&env);
         Ok(())
     }
 
