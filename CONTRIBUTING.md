@@ -24,3 +24,22 @@ CODEOWNERS only after actual reviewers accept ownership; paths alone do not crea
 For Wave issues, verify the current cycle and repository/org points budgets before
 publishing. Do not promise a fixed currency payout: complexity points and reward amounts
 are different. Track resolved status before the active Wave ends per organizer rules.
+
+## Pre-Pull Request Checklist
+
+Before submitting a Pull Request, please ensure that your changes pass all local formatting, compilation, and testing checks. This saves CI resources and speeds up the review process.
+
+1. **Format Code**: Ensure your code is properly formatted to avoid style-related CI failures.
+   ```bash
+   cargo fmt --all
+   ```
+
+2. **Build and Check for Warnings**: Build the smart contract and ensure there are no compilation or deprecation warnings.
+   ```bash
+   cargo build --target wasm32v1-none --release --locked -p stellarwork-escrow
+   ```
+
+3. **Run Unit Tests**: Run the full test suite locally. All tests must pass before opening a PR.
+   ```bash
+   cargo test --locked
+   ```
