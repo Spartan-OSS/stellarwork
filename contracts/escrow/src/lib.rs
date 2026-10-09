@@ -1,8 +1,8 @@
 #![no_std]
 
 use soroban_sdk::{
-    contract, contracterror, contractevent, contractimpl, contracttype, token, Address, Env,
-    String, Vec,
+    contract, contracterror, contractimpl, contracttype, symbol_short, token, Address, Env, String,
+    Vec,
 };
 
 const TTL_THRESHOLD: u32 = 17_280;
@@ -69,51 +69,6 @@ pub enum Error {
     InvalidUri = 6,
     InvalidSplit = 7,
     Overflow = 8,
-}
-
-#[contractevent(topics = ["created"], data_format = "single-value")]
-pub struct CreatedEvent {
-    #[topic]
-    pub id: u64,
-    pub count: u32,
-}
-
-#[contractevent(topics = ["funded"], data_format = "single-value")]
-pub struct FundedEvent {
-    #[topic]
-    pub id: u64,
-    #[topic]
-    pub mid: u32,
-    pub amount: i128,
-}
-
-#[contractevent(topics = ["submitted"], data_format = "single-value")]
-pub struct SubmittedEvent {
-    #[topic]
-    pub id: u64,
-    #[topic]
-    pub mid: u32,
-    pub evidence_uri: String,
-}
-
-#[contractevent(topics = ["disputed"], data_format = "single-value")]
-pub struct DisputedEvent {
-    #[topic]
-    pub id: u64,
-    #[topic]
-    pub mid: u32,
-    pub actor: Address,
-}
-
-#[contractevent(topics = ["settled"], data_format = "vec")]
-pub struct SettledEvent {
-    #[topic]
-    pub id: u64,
-    #[topic]
-    pub mid: u32,
-    pub refund: i128,
-    pub payout: i128,
-    pub status: Status,
 }
 
 #[contract]
@@ -196,14 +151,10 @@ fn release(
     if payout > 0 {
         t.transfer(&env.current_contract_address(), &g.freelancer, &payout);
     }
-    SettledEvent {
-        id,
-        mid,
-        refund,
-        payout,
-        status: m.status.clone(),
-    }
-    .publish(env);
+    env.events().publish(
+        (symbol_short!("settled"), id, mid),
+        (refund, payout, m.status.clone()),
+    );
     Ok(())
 }
 
@@ -269,7 +220,8 @@ impl Escrow {
         }
         env.storage().instance().set(&Key::NextId, &next);
         touch(&env);
-        CreatedEvent { id, count: g.count }.publish(&env);
+        env.events()
+            .publish((symbol_short!("created"), id), g.count);
         Ok(id)
     }
 
@@ -292,12 +244,8 @@ impl Escrow {
             &env.current_contract_address(),
             &m.amount,
         );
-        FundedEvent {
-            id,
-            mid,
-            amount: m.amount,
-        }
-        .publish(&env);
+        env.events()
+            .publish((symbol_short!("funded"), id, mid), m.amount);
         Ok(())
     }
 
@@ -315,12 +263,8 @@ impl Escrow {
         m.status = Status::Submitted;
         m.evidence_uri = uri;
         save_milestone(&env, id, mid, &m);
-        SubmittedEvent {
-            id,
-            mid,
-            evidence_uri: m.evidence_uri.clone(),
-        }
-        .publish(&env);
+        env.events()
+            .publish((symbol_short!("submitted"), id, mid), m.evidence_uri);
         Ok(())
     }
 
@@ -347,7 +291,8 @@ impl Escrow {
         }
         m.status = Status::Disputed;
         save_milestone(&env, id, mid, &m);
-        DisputedEvent { id, mid, actor }.publish(&env);
+        env.events()
+            .publish((symbol_short!("disputed"), id, mid), actor);
         Ok(())
     }
 
