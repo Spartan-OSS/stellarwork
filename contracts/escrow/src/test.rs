@@ -53,11 +53,7 @@ where
     let actual = vec![env, all.get(all.len() - 1).unwrap()];
     let expected = vec![
         env,
-        (
-            contract.clone(),
-            topics.into_val(env),
-            data.into_val(env),
-        )
+        (contract.clone(), topics.into_val(env), data.into_val(env)),
     ];
     assert_eq!(actual, expected);
 }
@@ -103,7 +99,12 @@ fn split_resolution_and_invalid_split() {
     api.fund_milestone(&eid, &0);
     api.submit_work(&eid, &0, &String::from_str(&env, "ipfs://proof"));
     api.raise_dispute(&eid, &0, &w);
-    assert_last_event(&env, &id, (symbol_short!("disputed"), eid, 0_u32), w.clone());
+    assert_last_event(
+        &env,
+        &id,
+        (symbol_short!("disputed"), eid, 0_u32),
+        w.clone(),
+    );
     assert!(api.try_resolve_dispute(&eid, &0, &70, &40).is_err());
     assert_eq!(api.get_locked(), 100);
     assert_eq!(api.get_milestone(&eid, &0).status, Status::Disputed);
