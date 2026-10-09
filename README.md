@@ -9,7 +9,7 @@ payment or either party requests an agreed arbitrator's split decision.
 This is a contributor foundation, not a released payment product. The Python business
 model passes 13 tests. The Soroban contract passes all four native tests and builds
 to release WASM with locked dependencies (validated 2026-10-09).
-No contract has been deployed. No wallet integration or frontend is implemented.
+A test instance of the contract is currently deployed to the Stellar Testnet at `CAL3XSNRIQK5BEUJUVYOWKFSOPBG3JUGH3EXMXT34NTUVWAUR6GRD7TS`. No wallet integration or frontend is implemented.
 See [readiness](docs/READINESS.md) before assigning work and
 [publication handoff](docs/PUBLISHING.md) for repository setup.
 
@@ -68,6 +68,4 @@ assets USDC. Private deliverables stay off-chain; only evidence references are p
 - [Stellar TTL testing](https://developers.stellar.org/docs/build/guides/archival/test-ttl-extension)
 - [Drips maintainer workflow](https://docs.drips.network/wave/maintainers/participating-in-a-wave/)
 
-License decision is maintainer-owned and unresolved. There is no invented copyright
-holder or license grant in this bundle. Select an open-source license before inviting
-external code submissions or applying to a Wave Program.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

@@ -1,8 +1,8 @@
 # Contributing
 
 This draft is prepared for a future public repository. Check docs/READINESS.md and the
-issue index before starting; blocked issues should not be assigned yet. License selection
-and reviewer identities must be completed before accepting external code contributions.
+issue index before starting; blocked issues should not be assigned yet. Reviewer identities
+must be completed before accepting external code contributions.
 
 1. Comment on the published issue with an approach, dependencies, and expected delivery.
 2. Wait for assignment; one primary contributor per issue avoids duplicated work.

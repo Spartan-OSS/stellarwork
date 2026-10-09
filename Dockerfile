@@ -15,7 +15,7 @@ RUN rustup target add wasm32v1-none
 
 # Install stellar-cli 
 # (this will take a few minutes on the first build, but will be cached for all future runs)
-RUN cargo install --locked stellar-cli --features opt
+RUN cargo install --locked stellar-cli
 
 WORKDIR /workspace
 
