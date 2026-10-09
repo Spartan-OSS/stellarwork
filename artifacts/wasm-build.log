@@ -1,0 +1,34 @@
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:154:18
+    |
+154 |     env.events().publish(
+    |                  ^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:224:14
+    |
+224 |             .publish((symbol_short!("created"), id), g.count);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:248:14
+    |
+248 |             .publish((symbol_short!("funded"), id, mid), m.amount);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:267:14
+    |
+267 |             .publish((symbol_short!("submitted"), id, mid), m.evidence_uri);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:295:14
+    |
+295 |             .publish((symbol_short!("disputed"), id, mid), actor);
+    |              ^^^^^^^
+
+warning: `stellarwork-escrow` (lib) generated 5 warnings
+    Finished `release` profile [optimized] target(s) in 0.05s

@@ -1,0 +1,18 @@
+test_all_roles (test_escrow.EscrowTests.test_all_roles) ... ok
+test_deadline_boundary (test_escrow.EscrowTests.test_deadline_boundary) ... ok
+test_dispute_split_and_replay (test_escrow.EscrowTests.test_dispute_split_and_replay) ... ok
+test_expired_refund (test_escrow.EscrowTests.test_expired_refund) ... ok
+test_happy_path_and_replay (test_escrow.EscrowTests.test_happy_path_and_replay) ... ok
+test_insufficient_funds_and_duplicate_funding (test_escrow.EscrowTests.test_insufficient_funds_and_duplicate_funding) ... ok
+test_invalid_ids (test_escrow.EscrowTests.test_invalid_ids) ... ok
+test_invalid_splits_are_atomic (test_escrow.EscrowTests.test_invalid_splits_are_atomic) ... ok
+test_invalid_terms_and_consent (test_escrow.EscrowTests.test_invalid_terms_and_consent) ... ok
+test_isolation_between_engagements (test_escrow.EscrowTests.test_isolation_between_engagements) ... ok
+test_randomized_conservation (test_escrow.EscrowTests.test_randomized_conservation) ... ok
+test_split_endpoints_and_rounding (test_escrow.EscrowTests.test_split_endpoints_and_rounding) ... ok
+test_uri_bounds (test_escrow.EscrowTests.test_uri_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.397s
+
+OK

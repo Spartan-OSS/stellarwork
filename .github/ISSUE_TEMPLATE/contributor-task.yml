@@ -1,0 +1,29 @@
+name: Scoped contributor task
+description: A bounded task with dependencies and verifiable acceptance criteria
+title: '[area] Concrete outcome'
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Current behavior and desired outcome
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: In scope, excluded work, and starting files
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and readiness
+      description: Link prerequisites; use ready, blocked, or maintainer-owned.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and verification commands
+    validations:
+      required: true

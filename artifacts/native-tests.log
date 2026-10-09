@@ -1,0 +1,51 @@
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:154:18
+    |
+154 |     env.events().publish(
+    |                  ^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:224:14
+    |
+224 |             .publish((symbol_short!("created"), id), g.count);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:248:14
+    |
+248 |             .publish((symbol_short!("funded"), id, mid), m.amount);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:267:14
+    |
+267 |             .publish((symbol_short!("submitted"), id, mid), m.evidence_uri);
+    |              ^^^^^^^
+
+warning: use of deprecated method `soroban_sdk::events::Events::publish`: use the #[contractevent] macro on a contract event type
+   --> contracts/escrow/src/lib.rs:295:14
+    |
+295 |             .publish((symbol_short!("disputed"), id, mid), actor);
+    |              ^^^^^^^
+
+warning: `stellarwork-escrow` (lib) generated 5 warnings
+warning: `stellarwork-escrow` (lib test) generated 5 warnings (5 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/lib.rs (target/debug/deps/stellarwork_escrow-5b1c09a9ece56b26)
+
+running 4 tests
+test test::refund_only_after_deadline ... ok
+test test::rejects_duplicate_roles_and_outsider_disputes ... ok
+test test::approval_conserves_tokens_and_preserves_other_milestone ... ok
+test test::split_resolution_and_invalid_split ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests stellarwork_escrow
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
